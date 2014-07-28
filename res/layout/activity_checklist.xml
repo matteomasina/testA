@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main" >
+
+
+
+<!--     <Button -->
+<!--         android:id="@+id/button1" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignParentTop="true" -->
+<!--         android:layout_centerHorizontal="true" -->
+<!--         android:text="Check Selected" /> -->
+    
+        <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:listSelector="@drawable/item_bg"
+        android:layout_alignParentLeft="true"
+        android:divider="#000"
+        android:choiceMode="singleChoice"
+        
+        android:dividerHeight="0.6dp" >
+    </ListView>
+
+</RelativeLayout>

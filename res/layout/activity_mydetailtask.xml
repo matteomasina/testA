@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <!-- ListRow Left sied Thumbnail image -->
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        
+        android:padding="3dip" >
+
+        <ImageView
+            android:id="@+id/iconaMyTask"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:src="@drawable/no_image" />
+
+    </LinearLayout>
+
+    <!-- Title Of Song -->
+
+    <!-- Artist Name -->
+
+
+    <!-- Rightend Duration -->
+
+
+    <!-- Rightend Arrow -->
+
+    <TextView
+        android:id="@+id/stabilimentoMyTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:paddingTop="18dp"
+        android:text="SERRAVALLE SCRIVIA (AL)"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/startTimeMyTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/thumbnail"
+        android:layout_marginTop="17dp"
+        android:contentDescription="14dip"
+        android:gravity="right"
+        android:text="TASK APERTO IL : 08/07/2014 - ore 18:57"
+        android:textColor="#10bcc9"
+        android:textSize="12dip"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/problemaMyTask"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startTimeMyTask"
+        android:layout_marginTop="14dp"
+        android:text="PENSILINA : Danni alla struttura"
+        android:textColor="#343434"
+        android:textSize="14dip" />
+
+    <TextView
+        android:id="@+id/noteMyTask"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/problemaMyTask"
+        android:layout_marginTop="15dp"
+        android:text="ELIMINAZIONE INFILTRAZIONE DI ACQUA DAL TETTO DELLA SALA VENDITE, PROBABILE OTTURAZIONE DELLE GRONDAIE"
+        android:textColor="#343434"
+        android:textSize="13dip" />
+
+    <TextView
+        android:id="@+id/indirizzoMyTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/stabilimentoMyTask"
+        android:layout_below="@+id/stabilimentoMyTask"
+        android:text="Via Novi ,4 - 71036"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="8dip" />
+
+    <Button
+        android:id="@+id/btnGetSnapshot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnOpenCheckList"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+
+        android:text="ACQUISISCI IMMAGINE" />
+
+    <Button
+        android:id="@+id/btnStartTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnGetSnapshot"
+        android:layout_alignRight="@+id/btnGetSnapshot"
+        android:layout_below="@+id/btnGetSnapshot"
+        android:layout_marginTop="28dp"
+
+        android:text="AVVIA LAVORAZIONE" />
+
+    <Button
+        android:id="@+id/btnOpenCheckList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnGetSnapshot"
+        android:layout_alignRight="@+id/btnGetSnapshot"
+        android:layout_below="@+id/noteMyTask"
+        android:layout_marginTop="68dp"
+        android:text="APRI CHECKLIST" />
+
+</RelativeLayout>
