@@ -63,6 +63,7 @@ public class CheckAdapter extends BaseAdapter {
         artist.setText(song.get(CheckCustomizedListView.KEY_ARTIST));
         duration.setText(song.get(CheckCustomizedListView.KEY_DURATION));
         chk.setText(song.get(CheckCustomizedListView.KEY_CHECKBOX));
+        chk.setChecked(false);
         imageLoader.DisplayImage(song.get(CheckCustomizedListView.KEY_THUMB_URL), thumb_image);
         return vi;
     }

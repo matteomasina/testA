@@ -72,6 +72,7 @@ public class MyTaskDetailActivity extends Activity {
 	  private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
 	  private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
 	  private static final int CHECKLISTCODE = 300;
+	  private static final int ACQUIRE_NFC = 400;	  
 	  public static final int MEDIA_TYPE_IMAGE = 1;
 	  public static final int MEDIA_TYPE_VIDEO = 2;
 	  private ImageView imgPreview;
@@ -86,6 +87,9 @@ public class MyTaskDetailActivity extends Activity {
 	  Button button;
 	  Button btnSnapshot;
 	  boolean inizio;
+	  public String statoLavorazione="";
+	  
+	  public String checklist;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +112,7 @@ public class MyTaskDetailActivity extends Activity {
 		  TextView problema = (TextView)findViewById(R.id.problemaMyTask);
 		  ImageView icona = (ImageView)findViewById(R.id.iconaMyTask);
 		  id=hashMap.get("id");
-		  
+		  checklist=hashMap.get("checklist");
 		  stabilimentoText=hashMap.get("citta");
 		  stabilimento.setText(hashMap.get("citta"));
 		  indirizzo.setText(hashMap.get("via"));
@@ -147,7 +151,7 @@ public class MyTaskDetailActivity extends Activity {
         	btnStart.setEnabled(false);        	
         	//btn check list        	
         	//btn snap
-        	btnSnapshot.setText("TERMINA LAVORAZIONE");
+        	btnSnapshot.setText("ACQUISISCI IMMAGINE");
         	btnSnapshot.setEnabled(false);  
         	break;
         case "ASSEGNATO":
@@ -156,17 +160,19 @@ public class MyTaskDetailActivity extends Activity {
         	btnStart.setEnabled(false);        	
         	//btn check list        	
         	//btn snap
-        	btnSnapshot.setText("TERMINA LAVORAZIONE");
-        	btnSnapshot.setEnabled(false);          	
+        	btnSnapshot.setText("ACQUISISCI IMMAGINE");
+        	btnSnapshot.setEnabled(false);
+        	button.setText("CHECKLIST SICUREZZA");
         	break;
         case "CHECKLIST SICUREZZA":
         	//btn start
         	btnStart.setText("AVVIA LAVORAZIONE");
         	btnStart.setEnabled(true);        	
         	//btn check list  
-        	button.setText("CHECKLIST APPROVATA");
+        	button.setText("INTERROMPI LAVORAZIONE");
         	button.setVisibility(View.GONE);
         	//btn snap        	
+        	btnSnapshot.setText("ACQUISISCI IMMAGINE");        	
         	btnSnapshot.setEnabled(true);          	
         	break;     
         case "IN LAVORAZIONE":  
@@ -174,11 +180,16 @@ public class MyTaskDetailActivity extends Activity {
         	btnStart.setText("TERMINA LAVORAZIONE");
         	btnStart.setEnabled(true);        	
         	//btn check list  
-        	//button.setText("CHECKLIST APPROVATA");
+        	button.setText("INTERROMPI LAVORAZIONE");
         	//btn snap
         	btnSnapshot.setEnabled(true);         	
         	break;
-        case "INTERROTTO":        	
+        case "INTERROTTO":
+        	button.setText("RIPRENDI LAVORAZIONE");        	
+        	btnSnapshot.setEnabled(true); 
+        	btnStart.setText("TERMINA LAVORAZIONE");
+        	btnStart.setEnabled(false);
+        	button.setText("RIPRENDI LAVORAZIONE");
         	break; 
         case "ESEGUITO":   
         	btnStart.setText("TASK CHIUSO");
@@ -195,18 +206,23 @@ public class MyTaskDetailActivity extends Activity {
 	        	String buttonText = btnStart.getText().toString();
 	        	switch(buttonText) {
 		            case "AVVIA LAVORAZIONE":
+		            	inizio=true;
+		            	statoLavorazione="START";
 		            	//btnStart.setText("TERMINA LAVORAZIONE");
 		            	Toast.makeText(MyTaskDetailActivity.this, "AVVICINARE IL TAG IDENTIFICATIVO PER AVVIARE LA MANUTENZIONE", Toast.LENGTH_SHORT).show();
-		            	//write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + hashMap.get("citta"),"IN LAVORAZIONE");		            	
-		            	inizio=true;
-		            	break;
-//		            case "INTERROMPI LAVORAZIONE":
-//		            	break;
-//		            case "RIPRENDI LAVORAZIONE":
-//		            	break;     
+		            	//write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + hashMap.get("citta"),"IN LAVORAZIONE");
+		            	Intent openNFC_start = new Intent(MyTaskDetailActivity.this,AcquireTAGActivity.class);
+		            	openNFC_start.putExtra("inizio", "START");			        	
+			        	startActivityForResult(openNFC_start, ACQUIRE_NFC); 
+		            	
+		            	break;  
 		            case "TERMINA LAVORAZIONE":
+		            	statoLavorazione="STOP";
 		            	//btnStart.setText("TERMINA LAVORAZIONE");
 		            	Toast.makeText(MyTaskDetailActivity.this, "AVVICINARE IL TAG IDENTIFICATIVO PER TERMINARE LA MANUTENZIONE", Toast.LENGTH_SHORT).show();
+		            	Intent openNFC_stop = new Intent(MyTaskDetailActivity.this,AcquireTAGActivity.class);
+		            	openNFC_stop.putExtra("inizio", "FINE");	
+			        	startActivityForResult(openNFC_stop, ACQUIRE_NFC);
 		            	inizio=false;
 		            	//write_on_db("ESEGUITO","TASK CHIUSO:" + hashMap.get("citta"),"ESEGUITO");
 		            	break;
@@ -226,27 +242,54 @@ public class MyTaskDetailActivity extends Activity {
 	    button.setOnClickListener(new View.OnClickListener(){
 	        @Override
 	        public void onClick(View v) {
-
-	        	URL url = null;
-				try {
-					url = new URL("http://93.113.136.157/api/insertLog");
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Map<String,Object> params = new LinkedHashMap<>();
-	        	params = new LinkedHashMap<>();
-	            params.put("dev", "Acm-e (GT-I9105P)");
-	            params.put("user", "Mauro Bianchi");
-	            params.put("operazione", "CHECKLIST SICUREZZA");
-	            params.put("dettagli", "APERTA CHECKLIST " + hashMap.get("citta"));
-	            Date d = new Date();
-	            params.put("timestamp", d.toString());
-	        	sendHTTPdata(params,url);
-	        	Intent openPage1 = new Intent(MyTaskDetailActivity.this,ChecklistWorkActivity.class);
-	        	openPage1.putExtra("id", id);
-	        	openPage1.putExtra("stabilimento", stabilimentoText);	        		        	
-	        	startActivityForResult(openPage1, CHECKLISTCODE);    	  			        	
+	        	String buttonTextCheckList = button.getText().toString();
+	        	switch(buttonTextCheckList) {
+		            case "CHECKLIST SICUREZZA":
+		            	URL url = null;
+						try {
+							url = new URL("http://93.113.136.157/api/insertLog");
+						} catch (MalformedURLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						Map<String,Object> params = new LinkedHashMap<>();
+			        	params = new LinkedHashMap<>();
+			            params.put("dev", "Acm-e (GT-I9105P)");
+			            params.put("user", "Mauro Bianchi");
+			            params.put("operazione", "CHECKLIST SICUREZZA");
+			            params.put("dettagli", "APERTA CHECKLIST " + hashMap.get("citta"));
+			            Date d = new Date();
+			            params.put("timestamp", d.toString());
+			        	sendHTTPdata(params,url);
+			        	Intent openChkLIST = new Intent(MyTaskDetailActivity.this,ChecklistWorkActivity.class);
+			        	openChkLIST.putExtra("checklist", checklist);
+			        	openChkLIST.putExtra("id", id);
+			        	openChkLIST.putExtra("stabilimento", stabilimentoText);	        		        	
+			        	startActivityForResult(openChkLIST, CHECKLISTCODE);  
+		            	
+		            	break;
+		            case "INTERROMPI LAVORAZIONE":
+		            	statoLavorazione="BREAK";
+		            	//btnStart.setText("TERMINA LAVORAZIONE");
+		            	Toast.makeText(MyTaskDetailActivity.this, "AVVICINARE IL TAG IDENTIFICATIVO PER AVVIARE LA MANUTENZIONE", Toast.LENGTH_SHORT).show();
+		            	//write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + hashMap.get("citta"),"IN LAVORAZIONE");
+		            	Intent openNFC_break = new Intent(MyTaskDetailActivity.this,AcquireTAGActivity.class);
+		            	openNFC_break.putExtra("inizio", "INTERROMPI");			        	
+			        	startActivityForResult(openNFC_break, ACQUIRE_NFC);
+		            	break;
+		            case "RIPRENDI LAVORAZIONE":
+		            	statoLavorazione="RESUME";
+		            	//btnStart.setText("TERMINA LAVORAZIONE");
+		            	Toast.makeText(MyTaskDetailActivity.this, "AVVICINARE IL TAG IDENTIFICATIVO PER AVVIARE LA MANUTENZIONE", Toast.LENGTH_SHORT).show();
+		            	//write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + hashMap.get("citta"),"IN LAVORAZIONE");
+		            	Intent openNFC_resume = new Intent(MyTaskDetailActivity.this,AcquireTAGActivity.class);
+		            	openNFC_resume.putExtra("inizio", "RESUME");			        	
+			        	startActivityForResult(openNFC_resume, ACQUIRE_NFC);
+		            	break;     
+		            
+	          }
+	        	
+//	        	   	  			        	
 	        }
 	    });
 	
@@ -254,73 +297,6 @@ public class MyTaskDetailActivity extends Activity {
 		
 	}
 	
-
-	
-
-//	@Override
-//    public void onNewIntent(Intent intent) {
-//        String action = intent.getAction();
-//        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-// 
-//        String s = action + "\n\n" + tag.toString();
-// 
-//        // parse through all NDEF messages and their records and pick text type only
-//        Parcelable[] data = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-//        if (data != null) {
-//            try {
-//                for (int i = 0; i < data.length; i++) {
-//                    NdefRecord [] recs = ((NdefMessage)data[i]).getRecords();
-//                    byte[] k = recs [0].getPayload();
-//                    String str = new String(k);
-//                    Log.e("TagINFO", str);
-//                    
-//                    for (int j = 0; j < recs.length; j++) {
-//                        if (recs[j].getTnf() == NdefRecord.TNF_WELL_KNOWN &&
-//                            Arrays.equals(recs[j].getType(), NdefRecord.RTD_TEXT)) {
-//                            byte[] payload = recs[j].getPayload();
-//                            String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
-//                            int langCodeLen = payload[0] & 0077;
-// 
-//                            s += ("\n\nNdefMessage[" + i + "], NdefRecord[" + j + "]:\n\"" +
-//                                 new String(payload, langCodeLen + 1, payload.length - langCodeLen - 1,
-//                                 textEncoding) + "\"");
-//                         
-//                        }
-//                    }
-//                    if (str.indexOf("ko")!=-1) {
-//                    	if (inizio) {                    	
-//                    		Toast.makeText(this, "TAG NON CORRISPONDENTE A QUESTA STAZIONE", Toast.LENGTH_SHORT).show();
-//                    		write_on_db("ANOMALIA TAG NON CORRISPONDENTE","AVVIO NON CONSENTITO :" + stabilimentoText ,"");
-//                    		
-//                    	} else {
-//                    		Toast.makeText(this, "TAG NON CORRISPONDENTE A QUESTA STAZIONE", Toast.LENGTH_SHORT).show();
-//                    		write_on_db("ANOMALIA TAG NON CORRISPONDENTE","TERMINE ATTIVITA' NON CONSENTITO :" + stabilimentoText ,"");
-//                    		
-//                    	}
-//                    }
-//                    if (str.indexOf("ok")!=-1) {   
-//                    	if (inizio) { 
-//                    		Toast.makeText(this, "TASK CORRETTAMENTE AVVIATO", Toast.LENGTH_SHORT).show();
-//	    					write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + stabilimentoText ,"IN LAVORAZIONE"); 
-//	    					btnStart.setText("TERMINA LAVORAZIONE");
-//	    					
-//                    	} else {
-//                    		Toast.makeText(this, "TASK CORRETTAMENTE CHIUSO", Toast.LENGTH_SHORT).show();
-//                    		write_on_db("ESEGUITO","TASK CHIUSO :" + stabilimentoText ,"ESEGUITO");
-//                    	
-//                    	}
-//    					//finish();            		
-//                    } 
-//                    if (str.indexOf("op")!=-1) {
-//                    	Toast.makeText(this, "AVVICINARE TAG DISPOSITIVO NON TAG OPERATORE", Toast.LENGTH_SHORT).show();                       		            		
-//                    }  
-//                    
-//                }                                 
-//            } catch (Exception e) {
-//                Log.e("TagDispatch", e.toString());
-//            }
-//        }		
-//    }	
 	
 	public void write_on_db(String operazione,String dettagli,String stato) {
 		URL url = null;
@@ -459,6 +435,23 @@ public class MyTaskDetailActivity extends Activity {
         	btnStart.setText("AVVIA LAVORAZIONE");
         	btnSnapshot.setText("ACQUISISCI IMMAGINE");
 		}
+		if (requestCode == ACQUIRE_NFC) {
+			//Toast.makeText(getApplicationContext(), "CHECKLIST SICUREZZA APPROVATA.SI PUO' AVVIARE LA LAVORAZIONE", Toast.LENGTH_SHORT).show();
+			switch (statoLavorazione) {
+			case "START":  
+				write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + stabilimentoText ,"IN LAVORAZIONE");
+	            break;
+	        case "BREAK":
+	        	write_on_db("INTERROTTO","TASK INTERROTTO:" + stabilimentoText ,"INTERROTTO");
+	            break;
+	        case "RESUME":  	    	  
+	        	write_on_db("IN LAVORAZIONE","TASK RIPRESO:" + stabilimentoText ,"IN LAVORAZIONE");
+	            break;
+	        case "STOP":  	    	  
+	        	write_on_db("ESEGUITO","TASK COMPLETATO :" + stabilimentoText ,"ESEGUITO");
+	            break;
+			}
+		}
 	     if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
 	         if (resultCode == RESULT_OK) {
 	             // successfully captured the image
@@ -468,6 +461,8 @@ public class MyTaskDetailActivity extends Activity {
 	        	 Toast.makeText(getApplicationContext(),
 	                     "IMMAGINE ACQUISITA", Toast.LENGTH_SHORT)
 	                     .show();
+	        	 
+		       
 //	        	 try {
 //	        		 try {
 ////	        			 

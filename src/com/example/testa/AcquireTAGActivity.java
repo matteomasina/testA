@@ -23,14 +23,17 @@ public class AcquireTAGActivity extends Activity {
     private IntentFilter[] mIntentFilters;
     private String[][] mNFCTechLists;
     private NfcAdapter mAdapter;
+    public String inizio="";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_acquire_tag);
+		Intent mIntent = getIntent();		
+		inizio = mIntent.getExtras().getString("inizio");
 		mAdapter = NfcAdapter.getDefaultAdapter(this);
-		pendingIntent = PendingIntent.getActivity(this,0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+		pendingIntent = PendingIntent.getActivity(this,0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);		
 	}
 
 	@Override
@@ -70,33 +73,41 @@ public class AcquireTAGActivity extends Activity {
                          
                         }
                     }
-//                    if (str.indexOf("ko")!=-1) {
-//                    	if (inizio) {                    	
-//                    		Toast.makeText(this, "TAG NON CORRISPONDENTE A QUESTA STAZIONE", Toast.LENGTH_SHORT).show();
-//                    		write_on_db("ANOMALIA TAG NON CORRISPONDENTE","AVVIO NON CONSENTITO :" + stabilimentoText ,"");
-//                    		
-//                    	} else {
-//                    		Toast.makeText(this, "TAG NON CORRISPONDENTE A QUESTA STAZIONE", Toast.LENGTH_SHORT).show();
-//                    		write_on_db("ANOMALIA TAG NON CORRISPONDENTE","TERMINE ATTIVITA' NON CONSENTITO :" + stabilimentoText ,"");
-//                    		
-//                    	}
-//                    }
-//                    if (str.indexOf("ok")!=-1) {   
-//                    	if (inizio) { 
-//                    		Toast.makeText(this, "TASK CORRETTAMENTE AVVIATO", Toast.LENGTH_SHORT).show();
-//	    					write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + stabilimentoText ,"IN LAVORAZIONE"); 
-//	    					btnStart.setText("TERMINA LAVORAZIONE");
-//	    					
-//                    	} else {
-//                    		Toast.makeText(this, "TASK CORRETTAMENTE CHIUSO", Toast.LENGTH_SHORT).show();
-//                    		write_on_db("ESEGUITO","TASK CHIUSO :" + stabilimentoText ,"ESEGUITO");
-//                    	
-//                    	}
-//    					//finish();            		
-//                    } 
-//                    if (str.indexOf("op")!=-1) {
-//                    	Toast.makeText(this, "AVVICINARE TAG DISPOSITIVO NON TAG OPERATORE", Toast.LENGTH_SHORT).show();                       		            		
-//                    }  
+                    if (str.indexOf("ko")!=-1) {
+                    	if (inizio=="START") {                    	
+                    		Toast.makeText(this, "TAG NON CORRISPONDENTE A QUESTA STAZIONE", Toast.LENGTH_SHORT).show();
+                    		//write_on_db("ANOMALIA TAG NON CORRISPONDENTE","AVVIO NON CONSENTITO :" + stabilimentoText ,"");
+                    		
+                    	} else {
+                    		Toast.makeText(this, "TAG NON CORRISPONDENTE A QUESTA STAZIONE", Toast.LENGTH_SHORT).show();
+                    		//write_on_db("ANOMALIA TAG NON CORRISPONDENTE","TERMINE ATTIVITA' NON CONSENTITO :" + stabilimentoText ,"");
+                    		
+                    	}
+                    }
+                    if (str.indexOf("ok")!=-1) {                       	
+                    	switch (inizio) {
+            			case "START":  
+            				Toast.makeText(this, "TASK CORRETTAMENTE AVVIATO", Toast.LENGTH_SHORT).show();            				
+            	            break;
+            	             
+            	        case "INTERROMPI":
+            	        	Toast.makeText(this, "TASK INTERROTTO", Toast.LENGTH_SHORT).show();
+
+            	            break;            	            
+            	        case "RESUME":  	    	  
+            	        	Toast.makeText(this, "TASK RIPRESO", Toast.LENGTH_SHORT).show();
+
+            	            break;
+            	            
+            	        case "FINE":  	    	  
+            	        	Toast.makeText(this, "TASK TERMINATO CORRETTAMENTE", Toast.LENGTH_SHORT).show();
+            	            break;
+            			}
+                    	finish(); 		
+                    } 
+                    if (str.indexOf("op")!=-1) {
+                    	Toast.makeText(this, "AVVICINARE TAG DISPOSITIVO NON TAG OPERATORE", Toast.LENGTH_SHORT).show();                       		            		
+                    }  
                     
                 }                                 
             } catch (Exception e) {

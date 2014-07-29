@@ -100,6 +100,8 @@ public class Task_list extends Activity {
 		if (operationType==0) {
 			bar.setTitle(Html.fromHtml("<font color='#000000'>I MIEI TASK</font>"));
 			urlServer="http://93.113.136.157/api/showUSERTASK";
+			customHandler = new android.os.Handler();
+	        customHandler.postDelayed(updateTimerThread, 0);
 		}
 		if (operationType==1) {
 			bar.setTitle(Html.fromHtml("<font color='#000000'>NUOVI TASK</font>"));
@@ -434,7 +436,9 @@ public class Task_list extends Activity {
     }
 	
 	public void getJSONdata() {
-	    try {	        
+	    try {	   
+	    	Date date = new Date();
+	    	Log.i("AGGIORNAMENTO QUERY",date.toString());
 	    	StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 	    	StrictMode.setThreadPolicy(policy);
 	        HttpParams httpParams = new BasicHttpParams();
@@ -488,24 +492,27 @@ public class Task_list extends Activity {
 	                map.put("via",via );
 	                map.put("stato", jsonPage.getString("stato"));
 	                map.put("creationtime", jsonPage.getString("creationTime"));
+	                //map.put("creationtime", jsonPage.getString("stopTime"));
 	                map.put("priorita", jsonPage.getString("priorita"));
 	                map.put("note", jsonPage.getString("note"));
 	                map.put("stopTime", jsonPage.getString("stopTime"));
 	                map.put("id", jsonPage.getString("id"));
 	                map.put("title", parts[0].trim() +" (" + parts[1].trim() + ")");
 	                map.put("artist", jsonPage.getString("oggetto"));
-	                map.put("duration", jsonPage.getString("creationTime"));
-	            	map.put("thumb_url", priority);           
-	              mylist.add(map);
-	              int actualItemID=Integer.parseInt(id);
-					
-					if (actualItemID>lastItemID) {
-						if (lastItemID!=-1) {
-							showNotification(map);
+	                //map.put("duration", jsonPage.getString("creationTime"));
+	                map.put("duration", jsonPage.getString("stopTime"));
+	            	map.put("thumb_url", priority); 
+	            	map.put("checklist", jsonPage.getString("checklist"));
+	            	mylist.add(map);
+		              int actualItemID=Integer.parseInt(id);
+						
+						if (actualItemID>lastItemID) {
+							if (lastItemID!=-1) {
+								showNotification(map);
+							}
+							//showNotification();
+							lastItemID=actualItemID;
 						}
-						//showNotification();
-						lastItemID=actualItemID;
-					}
 	            }
 	            list=(ListView)findViewById(R.id.list);
 	    		
@@ -542,8 +549,7 @@ public class Task_list extends Activity {
 	        } catch (IOException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
-	        }
-	        // Log.i(getClass().getSimpleName(), "send  task - end");
+	        }	        
 
 	    } catch (Throwable t) {
 	        Toast.makeText(this, "Request failed: " + t.toString(),

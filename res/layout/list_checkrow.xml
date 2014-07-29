@@ -76,6 +76,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/stabilimentoMyTask"
         android:text="CheckBoxCheckBox"
+        android:checked="false"
         android:textSize="12sp" />
 
 </RelativeLayout>
