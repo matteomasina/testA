@@ -98,7 +98,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
 
-        android:text="ACQUISISCI IMMAGINE" />
+        android:text="ACQUIRE IMAGE" />
 
     <Button
         android:id="@+id/btnStartTask"
@@ -109,7 +109,7 @@
         android:layout_below="@+id/btnGetSnapshot"
         android:layout_marginTop="28dp"
 
-        android:text="AVVIA LAVORAZIONE" />
+        android:text="START TASK" />
 
     <Button
         android:id="@+id/btnOpenCheckList"
@@ -119,6 +119,6 @@
         android:layout_alignRight="@+id/btnGetSnapshot"
         android:layout_below="@+id/noteMyTask"
         android:layout_marginTop="68dp"
-        android:text="APRI CHECKLIST" />
+        android:text="SECURITY CHECKLIST" />
 
 </RelativeLayout>

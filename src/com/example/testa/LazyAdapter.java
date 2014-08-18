@@ -75,7 +75,7 @@ public class LazyAdapter extends BaseAdapter {
       }	     
         
         // Setting all values in listview
-        String sourceString = "<b>STATO : " + song.get(CustomizedListView.KEY_STAO) + "</b> "; 
+        String sourceString = "<b>STATE : " + song.get(CustomizedListView.KEY_STAO) + "</b> "; 
         
         title.setText(song.get(CustomizedListView.KEY_TITLE));
         artist.setText(Html.fromHtml(sourceString) + "\n" + song.get(CustomizedListView.KEY_ARTIST));

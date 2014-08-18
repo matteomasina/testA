@@ -87,7 +87,7 @@
         android:layout_below="@+id/noteMyTask"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="69dp"
-        android:text="ACCETTA TASK" />
+        android:text="ACCEPT TASK" />
 
     <TextView
         android:id="@+id/indirizzoMyTask"

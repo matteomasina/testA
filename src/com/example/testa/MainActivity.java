@@ -186,7 +186,7 @@ public class MainActivity extends ActionBarActivity {
     		            params.put("dev", "Acm-e (GT-I9105P)");
     		            params.put("user", "Mauro Bianchi");
     		            params.put("operazione", "LOGIN");
-    		            params.put("dettagli", "OPERATORE Mauro Bianchi");
+    		            params.put("dettagli", "USER Mauro Bianchi");
     		            Log.e("LoginINFO", "operatore riconosciuto");
     		        	sendHTTPdata(params,url);
                     Intent intentOpen = new Intent(MainActivity.this,mainMenu.class); 		           		            		
@@ -196,7 +196,7 @@ public class MainActivity extends ActionBarActivity {
             		startActivity(intentOpen);
             		finish();
                     } else {
-                    	Toast.makeText(this, "TAG NON VALIDO! AVVICINARE UN TAG OPERATORE", Toast.LENGTH_SHORT).show();
+                    	Toast.makeText(this, "WRONG TAG PLESE APPROACH AN OPERATOR TAG", Toast.LENGTH_SHORT).show();
                     	//showNotification();
                     }
                 }

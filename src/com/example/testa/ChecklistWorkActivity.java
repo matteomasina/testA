@@ -1,5 +1,4 @@
 package com.example.testa;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,6 +56,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class ChecklistWorkActivity extends Activity {
+	@SuppressWarnings("unused")
 	private static final int TIMEOUT_MILLISEC = 10000;
 	
 	ListView list;
@@ -85,19 +85,19 @@ public class ChecklistWorkActivity extends Activity {
 		int checkListID = Integer.parseInt(checklist);
 		switch (checkListID) {
 	        case 1:  
-	        	titleList = "Sollevamenti critici | Checklist Rischi Maggiori";
+	        	titleList = "Critical lifting";
 	        	iconList=R.drawable.sollevamenti_critici;
 	            break;
 	        case 2:  
-	        	titleList = "Check List | Lavoro a caldo ";
+	        	titleList = "Hot work";
 	        	iconList=R.drawable.lavori_a_caldo;
 	            break;
 	        case 3:  
-	        	titleList = "Lavori in quota | Higher Risk Checklist";
+	        	titleList = "Working at heights";
 	        	iconList=R.drawable.lavori_in_quota;
 	            break;
 	        case 4:  
-	        	titleList = "Sollevamenti minori | Higher Risk Checklist";
+	        	titleList = "Minor lifting";
 	        	iconList=R.drawable.sollevamenti_minori;
 	            break;        
 	    }
@@ -111,8 +111,7 @@ public class ChecklistWorkActivity extends Activity {
 		
 		
 		Button button = (Button) findViewById(R.id.btnAcceptWorkList);
-		
-
+		button.setText("ACCEPT CHECKLIST");
 	    button.setOnClickListener(new View.OnClickListener(){
 	        @Override
 	        public void onClick(View v) {
@@ -128,8 +127,8 @@ public class ChecklistWorkActivity extends Activity {
 	        	params = new LinkedHashMap<>();
 	            params.put("dev", "Acm-e (GT-I9105P)");
 	            params.put("user", "Mauro Bianchi");
-	            params.put("operazione", "CHECKLIST SICUREZZA");
-	            params.put("dettagli", "APPROVATA CHECK LIST.STAZIONE : " +stabilimento);
+	            params.put("operazione", "SECURITY CHECKLIST");
+	            params.put("dettagli", "Security checklist approved.Site : " +stabilimento);
 	            Date d = new Date();
 	            params.put("timestamp", d.toString());
 	            sendHTTPdataCheckLIST(params,url);
@@ -143,7 +142,7 @@ public class ChecklistWorkActivity extends Activity {
 	        	
 	            params.put("id", id);
 	            params.put("field", "stato");
-	            params.put("stato", "CHECKLIST SICUREZZA");		            
+	            params.put("stato", "SECURITY CHECKLIST");		            
 	            sendHTTPdataCheckLIST(params,url);
 	        	finish();
 	        	
@@ -236,8 +235,6 @@ public class ChecklistWorkActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
-	
 	public static void Decode(CharSequence result) {
 		// TODO decode the JSON CharSequence (result)
 		//Log.e("char read", result);
@@ -286,39 +283,32 @@ public class ChecklistWorkActivity extends Activity {
 		mylist = new ArrayList<HashMap<String, String>>();        
         HashMap<String, String> map = new HashMap<String, String>();	
         map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");
-        map.put("checkBoxField", "1. Almeno 72 ore prima del sollevamento, la persona qualificata prepara un Piano di sollevamento critico");
+        map.put("checkBoxField", "1. At least 72 hours before list,the qualified operator prepare a Plan for Critical Lifting");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "2. Gru dislocate nella posizione corretta come indicato nel Piano di sollevamento critico");
+        map.put("checkBoxField", "2. Tow truck located in right position as in Plan for Critical Lifting");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "3. Ogni gru poggia una base stabile e solida");
+        map.put("checkBoxField", "3. Each tow truck has a stable and solid base");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "4. Il peso del carico effettivo non supera il peso considerato nell’ analisi del sollevamento");
+        map.put("checkBoxField", "4. The load weigth don't overtake the weigth considered on plan");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            		              
-        map.put("checkBoxField", "5. Il mezzo di sollevamento,i dispositivi di sollevamento (imbragature/cinghie/ganci) sono in buone condizioni, sono adeguati al sollevamento e vengono utilizzati nel rispetto della loro capacità nominale");
+        map.put("checkBoxField", "5. All tools and equipments are in good conditions and suitable for lifting");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "6. L’attrezzatura o il materiale da sollevare sono stabili, imballati e legati.I dispositivi di sollevamento sono saldamente fissati ed equilibrati");
+        map.put("checkBoxField", "6. All tools and equipments to lift are stable,packed and secured.");
         mylist.add(map);	           
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "7. Rivedere lo distanza minima di sicurezza tra i cavi elettrici e qualsiasi parte della gru, del carico o del cavo di carico.");
+        map.put("checkBoxField", "7. Review the minimum security distance between cables and all the tow truck parts.");
         mylist.add(map);	 
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");       	
-        map.put("checkBoxField", "8. L'area di sollevamento e il raggio di oscillazione sono protetti ed il traffico è controllato.");
+        map.put("checkBoxField", "8. The lifting area is protected and the traffic is monitored.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");            	
-        map.put("checkBoxField", "9. Gli operatori della gru hanno una vista chiara dell'area di lavoro.");
-        mylist.add(map);
-        map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "10.Vengono utilizzati segnalatori/osservatori (Moviere) dedicati e, per ognuno di essi,è stato definito il metodo di comunicazione utilizzato. ");
-        mylist.add(map);
-        map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "11. Vengono utilizzati cavi di controvento/funi guida per i carichi sospesi.");
-        mylist.add(map);
-
+        map.put("checkBoxField", "9. The tow truck operater has a clear view of the lifting area.");
+        mylist.add(map);        
 		
 		return mylist;
 	}
@@ -328,41 +318,35 @@ public class ChecklistWorkActivity extends Activity {
         
         HashMap<String, String> map = new HashMap<String, String>();	
         map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");
-        map.put("checkBoxField", "1. Determinare se è possibile completare l'attività senza eseguire lavori a caldo o al di fuori dell'area ristretta.");
+        map.put("checkBoxField", "1. Verifiy if it's possibile to complete hot work activity without execute hot works outside the restricted area.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "2. Se possibile, spostare le attività a caldo a 10 m da qualsiasi materiale combustibile o infiammabile. Se ciò non fosse possibile,coprire il materiale combustibile.");
+        map.put("checkBoxField", "2. Verify if it's possibile to move each hot work activity at 10 metres from any flammable source. If it's not possible, cover the flammable source.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "3. Realizzare barriere adeguate e posizionare estintori carichi a portata di mano.");
+        map.put("checkBoxField", "3. Realize suitable barriers and positioning fire extinguisher close at hands.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "4. Identificare tutte le fonti di vapore potenzialmente esplosivi (ad esempio carburante, fogne,sostanze chimiche).");
+        map.put("checkBoxField", "4. Identify all the potential flammable source (for example fuel,chemistry sources and flavours).");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            		              
-        map.put("checkBoxField", "5. Tutte le attrezzature dispongono di protezioni di sicurezza adeguate e sono messe a massa (MT).");
+        map.put("checkBoxField", "5. All the equipment are perfectly working.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "6. Quando il lavoro a caldo viene svolto entro 10 m da materiale combustibile che non è possibile spostare, ad esempio strutture in legno, un addetto dovrà occuparsi unicamente di controllare eventuali incendi durante il lavoro e nei 30 minuti successivi.");
+        map.put("checkBoxField", "6. When is not possible to move flamable sources, an operator will check the sources during the work and after 30 minut till the end of work .");
         mylist.add(map);	           
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "7. Il Bump Test di OGGI dell’ esplosimetro/LEL è stato completato e superato.");
+        map.put("checkBoxField", "7. The today bump test has been checked.");
         mylist.add(map);	 
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");       	
-        map.put("checkBoxField", "8. Esegui test atmosferici per confermare LEL 0% utilizzando un dispositivo di test certificato (vedere il registro di seguito).");
+        map.put("checkBoxField", "8. Execute atmosphere to test using specific tools.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");            	
-        map.put("checkBoxField", "9. Non vengono utilizzate attrezzature che producano scintille o fiamme libere in area ristretta (es. saldatrice,smerigliatrice angolare,cannello, ecc.)");
+        map.put("checkBoxField", "9. Do not use open flame");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "10. Tutte le attività che richiedono l'utilizzo di lavori a caldo vengono interrotte durante la consegna di carburante.");
-        mylist.add(map);
-        map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "11. Sono state ridotte le fonti di vapori esplosivi (ad esempio, copertura delle fogne).");
-        mylist.add(map);
-        map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");
-       	map.put("checkBoxField", "12. È disponibile il controllo di eventuali incendi (addetto anticendio) durante il lavoro e per 30 minuti dal suo completamento.");
-        mylist.add(map);
+        map.put("checkBoxField", "10. All the hot work acitivities are suspended during the fuel refurniscing.");
+        mylist.add(map);        
 		
 		return mylist;		
 	}	
@@ -371,22 +355,22 @@ public class ChecklistWorkActivity extends Activity {
 		mylist = new ArrayList<HashMap<String, String>>();        
         HashMap<String, String> map = new HashMap<String, String>();	
         map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");
-        map.put("checkBoxField", "1. Scala A LIBRETTO (non lavorare sulla scala).");
+        map.put("checkBoxField", "1. Stepladder (don't works on the stair).");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "2. Scala A SFILO | usare solo per ispezioni/accesso (non lavorare sulla scala)");
+        map.put("checkBoxField", "2. Extension ladder | use only for access and inspection");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "3. Scala a PIATTAFORMA");
+        map.put("checkBoxField", "3. Platform ladder");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "4. PIATTAFORMA A ELEVAZIONE (elevatore a pantografo/ a cestello)");
+        map.put("checkBoxField", "4. Elevator platform");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            		              
-        map.put("checkBoxField", "5. IMPALCATURA MOBILE (Trabattello).E’ necessaria autorizzazione di Exxonmobil per usarlo.");
+        map.put("checkBoxField", "5. Mobile scaffolding.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "6. Per LAVORI entro 2m da un margine non protetto o su un tetto con pendenza > 20%,usare un'imbragatura di sicurezza approvata, il cordino e un punto di ancoraggio idoneo.");
+        map.put("checkBoxField", "6. For working on a roof in a non protected area use fastening belt.");
         mylist.add(map);	           
         
 		
@@ -397,35 +381,32 @@ public class ChecklistWorkActivity extends Activity {
 		mylist = new ArrayList<HashMap<String, String>>();        
         HashMap<String, String> map = new HashMap<String, String>();	
         map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");
-        map.put("checkBoxField", "1. L’area di lavoro è priva di ostacoli aerei o laterali.");
+        map.put("checkBoxField", "1. The work area is totale free from obstacles.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "2. Controlla la distanza minima dei cavi elettrici da qualsiasi parte del mezzo di sollevamento, del carico e dei dispositivi di sollevamento.");
+        map.put("checkBoxField", "2. Check the minimum distance between electric cables and lifting equipment");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "3. Il mezzo di sollevamento è idoneo e rispetta le specifiche del produttore.");
+        map.put("checkBoxField", "3. The lifting tools respect the product specifications.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "4. Il mezzo di sollevamento è in buone condizioni e dotato di un rapporto tra carico e capacità di carico adeguata.");
-        mylist.add(map);
+        map.put("checkBoxField", "4. The lifting tools are in good conditions.");
+        mylist.add(map);        
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            		              
-        map.put("checkBoxField", "5.I dispositivi di sollevamento (imbragature/cinghie/ganci) sono in buone condizioni e dotati di un rapporto tra carico e capacità di carico adeguata.");
-        mylist.add(map);
+        map.put("checkBoxField", "5. All tools and equipments are in good conditions and suitable for lifting");
+        mylist.add(map);	                   
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "6. Le attrezzature o i materiali da sollevare sono stabili, imbragati e legati,i dispositivi di sollevamento (imbragature/cinghie) sono fissate saldamente e sono in equilibrio. Se si usa una pedana, che sia delle giuste dimensioni.");
+        map.put("checkBoxField", "6. All tools and equipments to lift are stable,packed and secured.");
         mylist.add(map);	           
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "7. Appropriate barriere sono poste a delimitazione dell’area di lavoro.");
+        map.put("checkBoxField", "7. Review the minimum security distance between cables and all the tow truck parts.");
         mylist.add(map);	 
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");       	
-        map.put("checkBoxField", "8. Il conducente del mezzo di sollevamento ha una visuale chiara dell'area di lavoro.");
+        map.put("checkBoxField", "8. The lifting area is protected and the traffic is monitored.");
         mylist.add(map);
         map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");            	
-        map.put("checkBoxField", "9. E’ previsto un segnalatore/osservatore (moviere) ed il metodo di comunicazione con esso è definito.");
-        mylist.add(map);
-        map = new HashMap<String, String>();map.put("id", "");map.put("title", "");map.put("artist", "");map.put("duration", "");	            	
-        map.put("checkBoxField", "10. Utilizza cavi di controvento/funi guida per carichi sospesi, ove necessari al carico.");
-        mylist.add(map);
+        map.put("checkBoxField", "9. The tow truck operater has a clear view of the lifting area.");
+        mylist.add(map);   
         		
 		return mylist;		
 	}

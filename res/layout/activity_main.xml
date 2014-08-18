@@ -11,18 +11,6 @@
     tools:context="com.example.testa.MainActivity" >
 
     <ImageView
-        android:id="@+id/image2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/image"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="61dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/logo_abb"
-        android:scaleType="centerInside"
-        android:src="@drawable/logo_abb" />
-
-    <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,18 +19,19 @@
         android:layout_marginTop="37dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/logo_esso"
-        android:scaleType="fitCenter"
-        android:onClick="imageClick"  
-        android:src="@drawable/logo_esso" />
+        android:onClick="imageClick"
+        android:scaleType="center"
+        android:src="@drawable/logoacme" />
 
     <TextView
         android:id="@+id/indirizzoMyTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image2"
+        android:layout_below="@+id/image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="63dp"
-        android:text="NFC MAINTENANCE TRACKER"	    android:gravity="center" 	
+        android:gravity="center"
+        android:text="NFC MAINTENANCE TRACKER"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
@@ -53,7 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
-        android:text="avvicinare TAG operatore..."
+        android:text="waiting for operator TAG"
         android:gravity="center" 
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

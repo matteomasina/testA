@@ -75,11 +75,11 @@ public class AcquireTAGActivity extends Activity {
                     }
                     if (str.indexOf("ko")!=-1) {
                     	if (inizio=="START") {                    	
-                    		Toast.makeText(this, "TAG NON CORRISPONDENTE A QUESTA STAZIONE", Toast.LENGTH_SHORT).show();
+                    		Toast.makeText(this, "TAG NOT CORRESPONDING WITH THIS LOCATION", Toast.LENGTH_SHORT).show();
                     		//write_on_db("ANOMALIA TAG NON CORRISPONDENTE","AVVIO NON CONSENTITO :" + stabilimentoText ,"");
                     		
                     	} else {
-                    		Toast.makeText(this, "TAG NON CORRISPONDENTE A QUESTA STAZIONE", Toast.LENGTH_SHORT).show();
+                    		Toast.makeText(this, "TAG NOT CORRESPONDING WITH THIS LOCATION", Toast.LENGTH_SHORT).show();
                     		//write_on_db("ANOMALIA TAG NON CORRISPONDENTE","TERMINE ATTIVITA' NON CONSENTITO :" + stabilimentoText ,"");
                     		
                     	}
@@ -87,26 +87,26 @@ public class AcquireTAGActivity extends Activity {
                     if (str.indexOf("ok")!=-1) {                       	
                     	switch (inizio) {
             			case "START":  
-            				Toast.makeText(this, "TASK CORRETTAMENTE AVVIATO", Toast.LENGTH_SHORT).show();            				
+            				Toast.makeText(this, "TASK CORRECTLY STARTED", Toast.LENGTH_SHORT).show();            				
             	            break;
             	             
             	        case "INTERROMPI":
-            	        	Toast.makeText(this, "TASK INTERROTTO", Toast.LENGTH_SHORT).show();
+            	        	Toast.makeText(this, "TASK PAUSED", Toast.LENGTH_SHORT).show();
 
             	            break;            	            
             	        case "RESUME":  	    	  
-            	        	Toast.makeText(this, "TASK RIPRESO", Toast.LENGTH_SHORT).show();
+            	        	Toast.makeText(this, "TASK RESUMED", Toast.LENGTH_SHORT).show();
 
             	            break;
             	            
             	        case "FINE":  	    	  
-            	        	Toast.makeText(this, "TASK TERMINATO CORRETTAMENTE", Toast.LENGTH_SHORT).show();
+            	        	Toast.makeText(this, "TASK CORRECTLY DONE", Toast.LENGTH_SHORT).show();
             	            break;
             			}
                     	finish(); 		
                     } 
                     if (str.indexOf("op")!=-1) {
-                    	Toast.makeText(this, "AVVICINARE TAG DISPOSITIVO NON TAG OPERATORE", Toast.LENGTH_SHORT).show();                       		            		
+                    	Toast.makeText(this, "PLEASE APPROACH A RIGHT TAG", Toast.LENGTH_SHORT).show();                       		            		
                     }  
                     
                 }                                 

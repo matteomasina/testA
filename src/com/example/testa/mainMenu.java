@@ -113,8 +113,8 @@ public class mainMenu extends Activity {
   Bitmap systemconfig= BitmapFactory.decodeResource(this.getResources(), R.drawable.systemconfig);
   Bitmap endapplication = BitmapFactory.decodeResource(this.getResources(), R.drawable.endapp128);
 
-  gridArray.add(new Item(myTasks,"I MIEI TASKS"));
-  gridArray.add(new Item(taskaperti,"TASK APERTI"));
+  gridArray.add(new Item(myTasks,"MY TASKS"));
+  gridArray.add(new Item(taskaperti,"TASKS"));
 //  gridArray.add(new Item(systemconfig,"CONFIGURAZIONE"));
 //  gridArray.add(new Item(userprofile,"PROFILO UTENTE"));
   //gridArray.add(new Item(null,""));

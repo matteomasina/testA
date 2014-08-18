@@ -98,13 +98,13 @@ public class Task_list extends Activity {
 		bar.setIcon(R.drawable.nfc40x40);
 		bar.setBackgroundDrawable(colorDrawable);
 		if (operationType==0) {
-			bar.setTitle(Html.fromHtml("<font color='#000000'>I MIEI TASK</font>"));
+			bar.setTitle(Html.fromHtml("<font color='#000000'>MY TASKS</font>"));
 			urlServer="http://93.113.136.157/api/showUSERTASK";
 			customHandler = new android.os.Handler();
 	        customHandler.postDelayed(updateTimerThread, 0);
 		}
 		if (operationType==1) {
-			bar.setTitle(Html.fromHtml("<font color='#000000'>NUOVI TASK</font>"));
+			bar.setTitle(Html.fromHtml("<font color='#000000'>NEW TASKS</font>"));
 			urlServer="http://93.113.136.157/api/taskNOTASSIGNED";
 			//Decode(downloadFile(urlServer));
 			customHandler = new android.os.Handler();
@@ -249,9 +249,9 @@ public class Task_list extends Activity {
 		 try {
 			 response = httpClient.execute(httpPost);
 			 Toast.makeText(getApplicationContext(),
-	                 "IMMAGINE INVIATA", Toast.LENGTH_SHORT)
+	                 "IMAGE SENT", Toast.LENGTH_SHORT)
 	                 .show();
-			 write_on_db("IMMAGINE ACQUISITA", "STAZIONE : " + stabilimento, "","");
+			 write_on_db("IMAGE ACQUIRED", "SITE : " + stabilimento, "","");
 			} catch (ClientProtocolException e) {
 			  e.printStackTrace();
 			} catch (IOException e) {
@@ -438,7 +438,7 @@ public class Task_list extends Activity {
 	public void getJSONdata() {
 	    try {	   
 	    	Date date = new Date();
-	    	Log.i("AGGIORNAMENTO QUERY",date.toString());
+	    	Log.i("UPDATE QUERY",date.toString());
 	    	StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 	    	StrictMode.setThreadPolicy(policy);
 	        HttpParams httpParams = new BasicHttpParams();

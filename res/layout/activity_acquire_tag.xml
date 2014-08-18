@@ -32,17 +32,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
-        android:text="AVVICINARE IL TAG NFC"
+        android:text="WAITING FOR TAG"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/relativeLayout1"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/indirizzoMyTask"
-        android:text="PER CONFERMARE L&apos;OPERAZIONE"
+        android:text="TO CONFIRM OPERATION"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

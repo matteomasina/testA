@@ -43,7 +43,7 @@ public class AcceptTaskActivity extends Activity {
 		  ActionBar bar = getActionBar();
 		  bar.setIcon(R.drawable.nfc40x40);
 		  bar.setBackgroundDrawable(colorDrawable);
-		  bar.setTitle(Html.fromHtml("<font color='#000000'>DETTAGLI TASK</font>"));
+		  bar.setTitle(Html.fromHtml("<font color='#000000'>TASK DETAILS</font>"));
 		  Intent intent = getIntent(); 
 		  @SuppressWarnings("unchecked")
 		final
@@ -57,7 +57,7 @@ public class AcceptTaskActivity extends Activity {
 		  id=hashMap.get("id");
 		  stabilimento.setText(hashMap.get("citta"));
 		  indirizzo.setText(hashMap.get("via"));
-		  startTime.setText("TASK APERTO IL : " + hashMap.get("creationtime"));
+		  startTime.setText("TASK OPEN ON : " + hashMap.get("creationtime"));
 		  if (hashMap.get("note") != "null") note.setText(hashMap.get("note"));
 		  problema.setText(hashMap.get("artist"));
 		  switch(hashMap.get("priorita")) {
@@ -107,10 +107,10 @@ public class AcceptTaskActivity extends Activity {
 		        	params = new LinkedHashMap<>();
 		            params.put("dev", "Acm-e (GT-I9105P)");
 		            params.put("user", "Mauro Bianchi");
-		            params.put("operazione", "ASSEGNATO");
-		            params.put("dettagli", "il task " + hashMap.get("citta") + " è stato assegnato");		            
+		            params.put("operazione", "ASSIGNED");
+		            params.put("dettagli", "the task " + hashMap.get("citta") + " has been assigned");		            
 		        	sendHTTPdata(params,url);
-		        	Log.e("insert log", "ASSEGNATO");
+		        	Log.e("insert log", "ASSIGNED");
 		        	url = null;
 		        	try {
 						url = new URL("http://93.113.136.157/api/updateTaskStatus");
@@ -121,7 +121,7 @@ public class AcceptTaskActivity extends Activity {
 		        	
 		            params.put("id", id);
 		            params.put("field", "stato");
-		            params.put("stato", "ASSEGNATO");		            
+		            params.put("stato", "ASSIGNED");		            
 		        	sendHTTPdata(params,url);
 		        	finish();
 		        }

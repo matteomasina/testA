@@ -99,7 +99,7 @@ public class MyTaskDetailActivity extends Activity {
 		ActionBar bar = getActionBar();
 		bar.setIcon(R.drawable.nfc40x40);
 		bar.setBackgroundDrawable(colorDrawable);
-		bar.setTitle(Html.fromHtml("<font color='#000000'>DETTAGLI TASK</font>"));
+		bar.setTitle(Html.fromHtml("<font color='#000000'>TASK DETAILS</font>"));
 		setContentView(R.layout.activity_mydetailtask);
 		Intent intent = getIntent(); 
 		@SuppressWarnings("unchecked")	
@@ -116,7 +116,7 @@ public class MyTaskDetailActivity extends Activity {
 		  stabilimentoText=hashMap.get("citta");
 		  stabilimento.setText(hashMap.get("citta"));
 		  indirizzo.setText(hashMap.get("via"));
-		  startTime.setText("TASK APERTO IL : " + hashMap.get("creationtime"));
+		  startTime.setText("TASK OPEN ON : " + hashMap.get("creationtime"));
 		  if (hashMap.get("note") != "null") note.setText(hashMap.get("note"));		
 		  problema.setText(hashMap.get("artist"));
 		  switch(hashMap.get("priorita")) {
@@ -145,54 +145,55 @@ public class MyTaskDetailActivity extends Activity {
 	    btnStart = (Button) findViewById(R.id.btnStartTask);
 		
 		switch(hashMap.get("stato")) {
-        case "CREATO":
+        case "CREATED":
         	//btn start
-        	btnStart.setText("AVVIA LAVORAZIONE");
+//        	button.setText("SECURITY CHECKLIST");
+        	btnStart.setText("START TASK");
         	btnStart.setEnabled(false);        	
         	//btn check list        	
         	//btn snap
-        	btnSnapshot.setText("ACQUISISCI IMMAGINE");
+        	btnSnapshot.setText("ACQUIRE IMAGE");
         	btnSnapshot.setEnabled(false);  
         	break;
-        case "ASSEGNATO":
+        case "ASSIGNED":
         	//btn start
-        	btnStart.setText("AVVIA LAVORAZIONE");
+        	btnStart.setText("START TASK");
         	btnStart.setEnabled(false);        	
         	//btn check list        	
         	//btn snap
-        	btnSnapshot.setText("ACQUISISCI IMMAGINE");
+        	btnSnapshot.setText("ACQUIRE IMAGE");
         	btnSnapshot.setEnabled(false);
-        	button.setText("CHECKLIST SICUREZZA");
+        	button.setText("SECURITY CHECKLIST");
         	break;
-        case "CHECKLIST SICUREZZA":
+        case "SECURITY CHECKLIST":
         	//btn start
-        	btnStart.setText("AVVIA LAVORAZIONE");
+        	btnStart.setText("START TASK");
         	btnStart.setEnabled(true);        	
         	//btn check list  
-        	button.setText("INTERROMPI LAVORAZIONE");
+        	button.setText("PAUSE TASK");
         	button.setVisibility(View.GONE);
         	//btn snap        	
-        	btnSnapshot.setText("ACQUISISCI IMMAGINE");        	
+        	btnSnapshot.setText("ACQUIRE IMAGE");        	
         	btnSnapshot.setEnabled(true);          	
         	break;     
-        case "IN LAVORAZIONE":  
+        case "ON WORK":  
         	//btn start
-        	btnStart.setText("TERMINA LAVORAZIONE");
+        	btnStart.setText("CLOSE TASK");
         	btnStart.setEnabled(true);        	
         	//btn check list  
-        	button.setText("INTERROMPI LAVORAZIONE");
+        	button.setText("PAUSE TASK");
         	//btn snap
         	btnSnapshot.setEnabled(true);         	
         	break;
-        case "INTERROTTO":
-        	button.setText("RIPRENDI LAVORAZIONE");        	
+        case "PAUSED":
+        	button.setText("RESUME TASK");        	
         	btnSnapshot.setEnabled(true); 
-        	btnStart.setText("TERMINA LAVORAZIONE");
+        	btnStart.setText("CLOSE TASK");
         	btnStart.setEnabled(false);
-        	button.setText("RIPRENDI LAVORAZIONE");
+        	button.setText("RESUME TASK");
         	break; 
-        case "ESEGUITO":   
-        	btnStart.setText("TASK CHIUSO");
+        case "DONE":   
+        	btnStart.setText("DONE TASK");
         	btnStart.setEnabled(false); 
         	btnSnapshot.setEnabled(false);  
         	button.setEnabled(false);  
@@ -205,21 +206,21 @@ public class MyTaskDetailActivity extends Activity {
 	        public void onClick(View v) {
 	        	String buttonText = btnStart.getText().toString();
 	        	switch(buttonText) {
-		            case "AVVIA LAVORAZIONE":
+		            case "START TASK":
 		            	inizio=true;
 		            	statoLavorazione="START";
 		            	//btnStart.setText("TERMINA LAVORAZIONE");
-		            	Toast.makeText(MyTaskDetailActivity.this, "AVVICINARE IL TAG IDENTIFICATIVO PER AVVIARE LA MANUTENZIONE", Toast.LENGTH_SHORT).show();
-		            	//write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + hashMap.get("citta"),"IN LAVORAZIONE");
+		            	Toast.makeText(MyTaskDetailActivity.this, "PLEASE APPROACH NFC TO START MAINTENANCE", Toast.LENGTH_SHORT).show();
+		            	//write_on_db("ON WORK","TASK AVVIATO:" + hashMap.get("citta"),"ON WORK");
 		            	Intent openNFC_start = new Intent(MyTaskDetailActivity.this,AcquireTAGActivity.class);
 		            	openNFC_start.putExtra("inizio", "START");			        	
 			        	startActivityForResult(openNFC_start, ACQUIRE_NFC); 
 		            	
 		            	break;  
-		            case "TERMINA LAVORAZIONE":
+		            case "CLOSE TASK":
 		            	statoLavorazione="STOP";
 		            	//btnStart.setText("TERMINA LAVORAZIONE");
-		            	Toast.makeText(MyTaskDetailActivity.this, "AVVICINARE IL TAG IDENTIFICATIVO PER TERMINARE LA MANUTENZIONE", Toast.LENGTH_SHORT).show();
+		            	Toast.makeText(MyTaskDetailActivity.this, "PLEASE APPROACH NFC TO STOP MAINTENANCE", Toast.LENGTH_SHORT).show();
 		            	Intent openNFC_stop = new Intent(MyTaskDetailActivity.this,AcquireTAGActivity.class);
 		            	openNFC_stop.putExtra("inizio", "FINE");	
 			        	startActivityForResult(openNFC_stop, ACQUIRE_NFC);
@@ -244,7 +245,7 @@ public class MyTaskDetailActivity extends Activity {
 	        public void onClick(View v) {
 	        	String buttonTextCheckList = button.getText().toString();
 	        	switch(buttonTextCheckList) {
-		            case "CHECKLIST SICUREZZA":
+		            case "SECURITY CHECKLIST":
 		            	URL url = null;
 						try {
 							url = new URL("http://93.113.136.157/api/insertLog");
@@ -256,8 +257,8 @@ public class MyTaskDetailActivity extends Activity {
 			        	params = new LinkedHashMap<>();
 			            params.put("dev", "Acm-e (GT-I9105P)");
 			            params.put("user", "Mauro Bianchi");
-			            params.put("operazione", "CHECKLIST SICUREZZA");
-			            params.put("dettagli", "APERTA CHECKLIST " + hashMap.get("citta"));
+			            params.put("operazione", "SECURITY CHECKLIST");
+			            params.put("dettagli", "OPEN CHECKLIST " + hashMap.get("citta"));
 			            Date d = new Date();
 			            params.put("timestamp", d.toString());
 			        	sendHTTPdata(params,url);
@@ -268,20 +269,20 @@ public class MyTaskDetailActivity extends Activity {
 			        	startActivityForResult(openChkLIST, CHECKLISTCODE);  
 		            	
 		            	break;
-		            case "INTERROMPI LAVORAZIONE":
+		            case "PAUSE TASK":
 		            	statoLavorazione="BREAK";
 		            	//btnStart.setText("TERMINA LAVORAZIONE");
-		            	Toast.makeText(MyTaskDetailActivity.this, "AVVICINARE IL TAG IDENTIFICATIVO PER AVVIARE LA MANUTENZIONE", Toast.LENGTH_SHORT).show();
-		            	//write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + hashMap.get("citta"),"IN LAVORAZIONE");
+		            	Toast.makeText(MyTaskDetailActivity.this, "PLEASE APPROACH NFC TO START MAINTENANCE", Toast.LENGTH_SHORT).show();
+		            	//write_on_db("ON WORK","TASK AVVIATO:" + hashMap.get("citta"),"ON WORK");
 		            	Intent openNFC_break = new Intent(MyTaskDetailActivity.this,AcquireTAGActivity.class);
 		            	openNFC_break.putExtra("inizio", "INTERROMPI");			        	
 			        	startActivityForResult(openNFC_break, ACQUIRE_NFC);
 		            	break;
-		            case "RIPRENDI LAVORAZIONE":
+		            case "RESUME TASK":
 		            	statoLavorazione="RESUME";
 		            	//btnStart.setText("TERMINA LAVORAZIONE");
-		            	Toast.makeText(MyTaskDetailActivity.this, "AVVICINARE IL TAG IDENTIFICATIVO PER AVVIARE LA MANUTENZIONE", Toast.LENGTH_SHORT).show();
-		            	//write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + hashMap.get("citta"),"IN LAVORAZIONE");
+		            	Toast.makeText(MyTaskDetailActivity.this, "PLEASE APPROACH NFC TO START MAINTENANCE", Toast.LENGTH_SHORT).show();
+		            	//write_on_db("ON WORK","TASK AVVIATO:" + hashMap.get("citta"),"ON WORK");
 		            	Intent openNFC_resume = new Intent(MyTaskDetailActivity.this,AcquireTAGActivity.class);
 		            	openNFC_resume.putExtra("inizio", "RESUME");			        	
 			        	startActivityForResult(openNFC_resume, ACQUIRE_NFC);
@@ -428,27 +429,27 @@ public class MyTaskDetailActivity extends Activity {
 		//Uri u = intent.getData();
 		
 		if (requestCode == CHECKLISTCODE) {
-			Toast.makeText(getApplicationContext(), "CHECKLIST SICUREZZA APPROVATA.SI PUO' AVVIARE LA LAVORAZIONE", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "SECURITY CHECKLIST APPORVED.NOW YOU CAN START MAINTENANCE", Toast.LENGTH_SHORT).show();
 			button.setVisibility(View.GONE);
 			btnStart.setEnabled(true); 
         	btnSnapshot.setEnabled(true);
-        	btnStart.setText("AVVIA LAVORAZIONE");
-        	btnSnapshot.setText("ACQUISISCI IMMAGINE");
+        	btnStart.setText("START TASK");
+        	btnSnapshot.setText("ACQUIRE IMAGE");
 		}
 		if (requestCode == ACQUIRE_NFC) {
-			//Toast.makeText(getApplicationContext(), "CHECKLIST SICUREZZA APPROVATA.SI PUO' AVVIARE LA LAVORAZIONE", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "SECURITY CHECKLIST APPROVATA.SI PUO' AVVIARE LA LAVORAZIONE", Toast.LENGTH_SHORT).show();
 			switch (statoLavorazione) {
 			case "START":  
-				write_on_db("IN LAVORAZIONE","TASK AVVIATO:" + stabilimentoText ,"IN LAVORAZIONE");
+				write_on_db("ON WORK","TASK STARTED:" + stabilimentoText ,"ON WORK");
 	            break;
 	        case "BREAK":
-	        	write_on_db("INTERROTTO","TASK INTERROTTO:" + stabilimentoText ,"INTERROTTO");
+	        	write_on_db("PAUSED","TASK PAUSED:" + stabilimentoText ,"PAUSED");
 	            break;
 	        case "RESUME":  	    	  
-	        	write_on_db("IN LAVORAZIONE","TASK RIPRESO:" + stabilimentoText ,"IN LAVORAZIONE");
+	        	write_on_db("ON WORK","TASK RESUMED:" + stabilimentoText ,"ON WORK");
 	            break;
 	        case "STOP":  	    	  
-	        	write_on_db("ESEGUITO","TASK COMPLETATO :" + stabilimentoText ,"ESEGUITO");
+	        	write_on_db("DONE","TASK DONE :" + stabilimentoText ,"DONE");
 	            break;
 			}
 		}
@@ -459,7 +460,7 @@ public class MyTaskDetailActivity extends Activity {
 	             //(previewCapturedImage();
 
 	        	 Toast.makeText(getApplicationContext(),
-	                     "IMMAGINE ACQUISITA", Toast.LENGTH_SHORT)
+	                     "IMAGE ACQUIRED", Toast.LENGTH_SHORT)
 	                     .show();
 	        	 
 		       
@@ -567,9 +568,9 @@ public class MyTaskDetailActivity extends Activity {
 			 try {
 				 response = httpClient.execute(httpPost);
 				 Toast.makeText(getApplicationContext(),
-		                 "IMMAGINE INVIATA", Toast.LENGTH_SHORT)
+		                 "IMMAGE SENT", Toast.LENGTH_SHORT)
 		                 .show();
-				 write_on_db("IMMAGINE ACQUISITA", "task snapshot", "");
+				 write_on_db("ACQUIRED IMAGE", "task snapshot", "");
 				} catch (ClientProtocolException e) {
 				  e.printStackTrace();
 				} catch (IOException e) {
